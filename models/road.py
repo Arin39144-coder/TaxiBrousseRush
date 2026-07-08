@@ -1,7 +1,7 @@
 # models/road.py
-
 import random
 
+# segment de route
 
 class RoadSegment:
 
@@ -15,6 +15,7 @@ class RoadSegment:
     def add_obstacle(self, obstacle):
         self.obstacles.append(obstacle)
 
+# route
 
 class Route:
 
@@ -36,6 +37,7 @@ class Route:
     def get_total_length(self):
         return sum(segment.length for segment in self.segments)
 
+# Generation procedural de la route
 
 class RouteGenerator:
 
@@ -53,6 +55,7 @@ class RouteGenerator:
             route.add_segment(segment)
         return route
 
+# aspect meteo
 
 class WeatherPattern:
 

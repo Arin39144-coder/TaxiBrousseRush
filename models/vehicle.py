@@ -37,6 +37,8 @@ class TaxiBrousse:
         self.slow_factor = 1.0
         self.slow_timer = 0
     
+    # ----- Passagers -----
+    
     def _initialize_passengers(self, passengers):
         for p in passengers[:self.max_passengers]:
             self.passenger_manager.add_passenger(p)
@@ -93,19 +95,7 @@ class TaxiBrousse:
             self.fuel -= self.fuel_consumption * dt
             self.fuel = max(self.fuel, 0)
 
-    # ----- Passagers -----
-
-    def _initialize_passengers(self, passengers):
-        self.passengers = passengers[:self.max_passengers]
-
-    def get_passenger_count(self):
-        return len(self.passengers)
-
-    def update_passenger_stress(self, amount):
-        for passenger in self.passengers:
-            passenger.stress += amount
-
-    def lose_passenger(self):
+    
         if self.passengers:
             self.passengers.pop(0)
 
