@@ -20,7 +20,7 @@ def build_road():
     # Route principale (terre rouge, typique des pistes malgaches)
     road = Entity(
         model="cube",
-        color=color.rgb(150, 70, 40),
+        color=color.rgb32(150, 70, 40),
         scale=(ROAD_WIDTH, 0.2, ROAD_LENGTH),
         position=(0, 0, ROAD_LENGTH / 2 - 20),
         collider=None,
@@ -30,7 +30,7 @@ def build_road():
     for side in (-1, 1):
         Entity(
             model="cube",
-            color=color.rgb(60, 110, 50),
+            color=color.rgb32(60, 110, 50),
             scale=(30, 0.15, ROAD_LENGTH),
             position=(side * (ROAD_WIDTH / 2 + 15), -0.05, ROAD_LENGTH / 2 - 20),
             collider=None,

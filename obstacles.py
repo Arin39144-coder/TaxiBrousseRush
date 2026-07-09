@@ -17,7 +17,7 @@ class Pothole(Entity):
     def __init__(self, position=(0, 0.05, 0), **kwargs):
         super().__init__(
             model="cube",
-            color=color.rgb(40, 30, 20),
+            color=color.rgb32(40, 30, 20),
             scale=(1.8, 0.1, 1.8),
             position=position,
             collider=None,  # collision gérée manuellement (plus simple à ajuster)
@@ -32,7 +32,7 @@ class Pothole(Entity):
         if distance(self.position, car.position) < 1.3:
             self.triggered = True
             car.apply_pothole_slow()
-            self.color = color.rgb(70, 50, 35)  # feedback visuel : "déjà touché"
+            self.color = color.rgb32(70, 50, 35)  # feedback visuel : "déjà touché"
             return "pothole"
         return None
 
@@ -43,7 +43,7 @@ class Zebu(Entity):
     def __init__(self, position=(0, 0.6, 0), road_width=10, **kwargs):
         super().__init__(
             model="cube",
-            color=color.rgb(120, 90, 60),
+            color=color.rgb32(120, 90, 60),
             scale=(1.2, 1.2, 2.2),
             position=position,
             collider=None,

@@ -14,7 +14,6 @@ Objectif du MVP :
   - éviter/subir les nids-de-poule (ralentissement) et les zébus (collision)
   - score = distance parcourue - pénalités de sécurité
 """
-
 import random
 from ursina import (
     Ursina, Entity, Sky, DirectionalLight, AmbientLight,
@@ -25,28 +24,36 @@ from car import Car
 from road import build_road, ROAD_LENGTH, ROAD_WIDTH
 from obstacles import Pothole, Zebu
 
+
+
 app = Ursina()
 window.title = "TaxiBrousse Rush"
 window.fps_counter.enabled = True
 window.exit_button.visible = False
-
+print("GPU renderer:", base.win.getGsg().getDriverRenderer())
+print("GPU vendor:", base.win.getGsg().getDriverVendor())
 # --- Décor ---
-Sky(color=color.rgb(140, 190, 230))
-sun = DirectionalLight()
-sun.look_at(Vec3(1, -1, 1))
-AmbientLight(color=color.rgba(150, 150, 150, 0.5))
+sky = Sky(color=color.rgb32(140, 190, 230))
 
 road = build_road()
 
 # --- Voiture ---
 car = Car(position=(0, 0.5, 0))
 
-# --- Caméra (suit le taxi depuis l'arrière, vue 3e personne) ---
-camera.parent = car
+# --- Camera ---
+camera_pivot = Entity(
+    parent=car,
+    position=(0, 0, 0),
+    scale=(1 / car.scale_x, 1 / car.scale_y, 1 / car.scale_z),
+)
+camera.parent = camera_pivot
 camera.position = (0, 5, -11)
 camera.rotation_x = 18
 camera.fov = 90
 
+from weather import WeatherSystem
+
+weather = WeatherSystem(car)  # après la création de `car`
 
 # --- Génération des obstacles le long de la route ---
 NUM_POTHOLES = 14
@@ -133,6 +140,7 @@ def restart_game():
 def update():
     if game_state["game_over"]:
         return
+    weather.update(car.z)
 
     # --- Timer ---
     game_state["time_left"] -= time.dt
